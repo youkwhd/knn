@@ -1,0 +1,13 @@
+#!/usr/bin/julia
+
+push!(LOAD_PATH, joinpath(pwd(), "lib"))
+
+using KNN
+
+function main(args :: Array{String})
+    println("Hello from Julia!")
+end
+
+if abspath(PROGRAM_FILE) == @__FILE__
+    main(ARGS)
+end
