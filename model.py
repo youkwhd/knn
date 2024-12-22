@@ -15,12 +15,12 @@ class Model:
         dataset: list[list[any]] = []
 
         for i in range(len(self.dataset)):
-            data = self.dataset[i].copy()
-            data.append(self.target[i])
-            dataset.append(data)
+            _data = self.dataset[i].copy()
+            _data.append(self.target[i])
+            dataset.append(_data)
 
-        for i, v in enumerate(self.dataset):
-            zipped = zip(data, v[:-1])
+        for i in range(len(dataset)):
+            zipped = zip(data, dataset[i][:-1])
             dataset[i].append(sum(map(lambda val: abs(val[0] - val[1]), zipped)) / len(data))
 
         dataset.sort(key=lambda data: data[-1])
