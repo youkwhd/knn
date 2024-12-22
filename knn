@@ -9,5 +9,5 @@ if __name__ == "__main__":
     dt = dataset.split(dt, n=3*4)
 
     model = Model()
-    model.fit([data[:-1] for data in dt["train"]], [data[-1] for data in dt["test"]])
+    model.fit([data[:-1] for data in dt["train"]], [data[-1] for data in dt["train"]])
     model.classify([])
