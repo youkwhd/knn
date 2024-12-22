@@ -23,4 +23,4 @@ if __name__ == "__main__":
 
     model = Model()
     model.fit([data[:-1] for data in dataset], [data[-1] for data in dataset])
-    model.classify()
+    model.classify([])
