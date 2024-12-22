@@ -9,5 +9,5 @@ class Model:
         self.dataset = dataset
         self.target = target
     
-    def classify(self, data: list[int | float | complex]):
-        pass
+    def classify(self, data: list[int | float | complex]) -> any:
+        return None

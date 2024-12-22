@@ -2,10 +2,11 @@
 
 from model import Model
 from os import PathLike
+from typing import Callable
 from pprint import pprint
 import csv
 
-def load_iris_dataset(path: PathLike = "dataset/iris.csv"):
+def load_csv(parse: Callable[[list[str]], list[any]], path: PathLike = "dataset/iris.csv"):
     dataset = []
 
     with open(path, "r", encoding="utf-8") as f:
@@ -15,11 +16,11 @@ def load_iris_dataset(path: PathLike = "dataset/iris.csv"):
             dataset.append(row)
     
     dataset.pop(0)
-    return parse_iris_dataset(dataset)
-
-def parse_iris_dataset(dataset: list[list[str]]):
-    return [[float(data[0]), float(data[1]), float(data[2]), float(data[3]), data[4]] for data in dataset]
+    return [parse(data) for data in dataset]
 
 if __name__ == "__main__":
-    dataset = load_iris_dataset()
+    dataset = load_csv(lambda data: [float(data[0]), float(data[1]), float(data[2]), float(data[3]), data[4]])
+
     model = Model()
+    model.fit([data[:-1] for data in dataset], [data[-1] for data in dataset])
+    model.classify()
