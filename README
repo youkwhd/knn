@@ -1,0 +1,9 @@
+knn
+===
+
+Machine Learning model made for classifying.
+
+Running
+-------
+
+    ./knn
