@@ -10,4 +10,6 @@ if __name__ == "__main__":
 
     model = Model()
     model.fit([data[:-1] for data in dt["train"]], [data[-1] for data in dt["train"]])
-    model.classify([])
+
+    for data in dt["test"]:
+        model.classify(data[:-1])
