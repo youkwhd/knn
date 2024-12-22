@@ -11,10 +11,10 @@ if __name__ == "__main__":
     model = Model()
     model.fit([data[:-1] for data in dt["train"]], [data[-1] for data in dt["train"]])
 
-    accuracy = 0
+    correct = 0
     for data in dt["test"]:
         predicted = model.classify(data[:-1])
         actual = data[-1]
-        accuracy += predicted == actual
+        correct += predicted == actual
     
-    print(f"Accuracy: {(100 / (len(dt["test"]) / accuracy)):.2f}%")
+    print(f"Accuracy: {(100 / (len(dt["test"]) / correct)):.2f}%")

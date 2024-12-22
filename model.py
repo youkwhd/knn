@@ -1,8 +1,12 @@
+from collections import Counter
+
 class Model:
     dataset: list[list[int | float | complex]]
     target: list[any]
+    distance: int
 
-    def __init__(self, dataset: list[list[int | float | complex]] = [], target: list[any] = []):
+    def __init__(self, distance: int = 5, dataset: list[list[int | float | complex]] = [], target: list[any] = []):
+        self.distance = distance
         self.fit(dataset, target)
 
     def fit(self, dataset: list[list[int | float | complex]], target: list[any]):
@@ -24,22 +28,5 @@ class Model:
             dataset[i].append(sum(map(lambda val: abs(val[0] - val[1]), zipped)) / len(data))
 
         dataset.sort(key=lambda data: data[-1])
-
-        hmap = {}
-        for i in range(5):
-            key = dataset[i][-2]
-
-            if key not in hmap:
-                hmap[key] = 0
-            
-            hmap[key] += 1
-
-        predicted = None
-        mmax = 0
-        for k, v in hmap.items():
-            if v > mmax:
-                predicted = k
-
-            mmax = max(mmax, v)
-
-        return predicted
+        predictions = Counter([data[-2] for data in dataset[:self.distance]])
+        return predictions.most_common(1)[0][0]
