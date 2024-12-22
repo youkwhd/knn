@@ -1,13 +1,6 @@
-#!/usr/bin/julia
+#!/usr/bin/env python
 
-push!(LOAD_PATH, joinpath(pwd(), "lib"))
+from model import Model
 
-using KNN
-
-function main(args :: Array{String})
-    println("Hello from Julia!")
-end
-
-if abspath(PROGRAM_FILE) == @__FILE__
-    main(ARGS)
-end
+if __name__ == "__main__":
+    model = Model()
