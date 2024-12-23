@@ -1,22 +1,23 @@
 from collections import Counter
+from typing import Any
 
 class Model:
     dataset: list[list[int | float | complex]]
-    target: list[any]
+    target: list[Any]
     distance: int
 
-    def __init__(self, distance: int = 5, dataset: list[list[int | float | complex]] = [], target: list[any] = []):
+    def __init__(self, distance: int = 5, dataset: list[list[int | float | complex]] = [], target: list[Any] = []):
         self.distance = distance
         self.fit(dataset, target)
 
-    def fit(self, dataset: list[list[int | float | complex]], target: list[any]):
+    def fit(self, dataset: list[list[int | float | complex]], target: list[Any]):
         assert len(dataset) == len(target)
 
         self.dataset = dataset
         self.target = target
     
-    def classify(self, data: list[int | float | complex]) -> any:
-        dataset: list[list[any]] = []
+    def classify(self, data: list[int | float | complex]) -> Any:
+        dataset: list[list[Any]] = []
 
         for i in range(len(self.dataset)):
             _data = self.dataset[i].copy()

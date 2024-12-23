@@ -1,8 +1,8 @@
 from os import PathLike
-from typing import Callable
+from typing import Callable, Any
 import csv, math
 
-def load(parse: Callable[[list[str]], list[any]], path: PathLike = "dataset/iris.csv"):
+def load(parse: Callable[[list[str]], list[Any]], path: str | PathLike = "dataset/iris.csv"):
     dataset = []
 
     with open(path, "r", encoding="utf-8") as f:
@@ -14,13 +14,13 @@ def load(parse: Callable[[list[str]], list[any]], path: PathLike = "dataset/iris
     dataset.pop(0)
     return [parse(data) for data in dataset]
 
-def split(dataset: list[list[any]], target_idx: int = -1, n: int = 10) -> tuple[list[list[any]], list[list[any]]]:
+def split(dataset: list[list[Any]], target_idx: int = -1, n: int = 10) -> tuple[list[list[Any]], list[list[Any]]]:
     assert n >= 0
 
     train = sorted(dataset, key=lambda data: str.lower(data[target_idx]))
     test = []
 
-    def index(lst: list, value: Callable[[any], bool]):
+    def index(lst: list, value: Callable[[Any], bool]):
         for i, val in enumerate(lst):
             if value(val):
                 return i
