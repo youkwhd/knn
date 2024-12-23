@@ -5,7 +5,8 @@ import dataset
 
 if __name__ == "__main__":
     dt = dataset.load(lambda data: [float(data[0]), float(data[1]), float(data[2]), float(data[3]), data[4]])
-    dt = dataset.split(dt, n=3*4)
+    dt = dataset.split(dt, n=3*6)
+    dt = { "train": dt[0], "test": dt[1] }
 
     model = Model()
     model.fit([data[:-1] for data in dt["train"]], [data[-1] for data in dt["train"]])

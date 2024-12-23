@@ -14,7 +14,7 @@ def load(parse: Callable[[list[str]], list[any]], path: PathLike = "dataset/iris
     dataset.pop(0)
     return [parse(data) for data in dataset]
 
-def split(dataset: list[list[any]], target_idx: int = -1, n: int = 10) -> dict:
+def split(dataset: list[list[any]], target_idx: int = -1, n: int = 10) -> tuple[list[list[any]], list[list[any]]]:
     assert n >= 0
 
     train = sorted(dataset, key=lambda data: str.lower(data[target_idx]))
@@ -40,4 +40,4 @@ def split(dataset: list[list[any]], target_idx: int = -1, n: int = 10) -> dict:
 
         n -= n_target_to_add
 
-    return { "train": train, "test": test }
+    return (train, test)
