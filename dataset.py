@@ -2,6 +2,7 @@ from os import PathLike
 from typing import Callable, Any
 import csv, math
 
+# TODO: automatic parsing
 def load(parse: Callable[[list[str]], list[Any]], path: str | PathLike = "dataset/iris.csv"):
     dataset = []
 
@@ -17,7 +18,7 @@ def load(parse: Callable[[list[str]], list[Any]], path: str | PathLike = "datase
 def split(dataset: list[list[Any]], target_idx: int = -1, n: int = 10) -> tuple[list[list[Any]], list[list[Any]]]:
     assert n >= 0
 
-    train = sorted(dataset, key=lambda data: str.lower(data[target_idx]))
+    train = sorted(dataset, key=lambda data: data[target_idx]) # TODO: make sure string is lowered
     test = []
 
     def index(lst: list, value: Callable[[Any], bool]):
@@ -28,7 +29,7 @@ def split(dataset: list[list[Any]], target_idx: int = -1, n: int = 10) -> tuple[
         return -1
 
     targets = list(set([data[target_idx] for data in train]))
-    targets = sorted(targets, key=str.lower) # TODO: preserve index
+    targets = sorted(targets) # TODO: preserve index
     n_target_to_add = math.ceil(n / len(targets))
 
     for target in targets:
@@ -41,3 +42,17 @@ def split(dataset: list[list[Any]], target_idx: int = -1, n: int = 10) -> tuple[
         n -= n_target_to_add
 
     return (train, test)
+
+def enumize(dataset: list[list[Any]]) -> list[list[int | float | complex]]:
+    for i, v in enumerate(dataset[0]):
+        if not isinstance(v, str):
+            continue
+
+        categories = {}
+        for j, category in enumerate(set([data[i] for data in dataset])):
+            categories[category] = j + 1
+
+        for j in range(len(dataset)):
+            dataset[j][i] = categories[dataset[j][i]]
+
+    return dataset
