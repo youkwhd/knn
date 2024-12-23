@@ -2,8 +2,7 @@ from os import PathLike
 from typing import Callable, Any
 import csv, math
 
-# TODO: automatic parsing
-def load(parse: Callable[[list[str]], list[Any]], path: str | PathLike = "dataset/iris.csv"):
+def load(path: str | PathLike = "dataset/iris.csv"):
     dataset = []
 
     with open(path, "r", encoding="utf-8") as f:
@@ -12,7 +11,24 @@ def load(parse: Callable[[list[str]], list[Any]], path: str | PathLike = "datase
         for row in reader:
             dataset.append(row)
     
+    # Remove the header
     dataset.pop(0)
+
+    # TODO: this good?
+    def parse(data: list[str]) -> list[Any]:
+        _data: list[Any] = data
+
+        for i in range(len(_data)):
+            try:
+                _data[i] = int(_data[i])
+            except:
+                try:
+                    _data[i] = float(_data[i])
+                except:
+                    pass
+
+        return _data
+
     return [parse(data) for data in dataset]
 
 def split(dataset: list[list[Any]], target_idx: int = -1, n: int = 10) -> tuple[list[list[Any]], list[list[Any]]]:
